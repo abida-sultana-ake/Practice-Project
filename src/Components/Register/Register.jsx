@@ -1,25 +1,37 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import React from "react";
+//import { createUserWithEmailAndPassword } from "firebase/auth";
+import React, { use } from "react";
 import { Link } from "react-router";
-import { auth } from "../../Firebase/Firebase.int";
+import { AuthContext } from "../../Context/AuthContext";
+//import { auth } from "../../Firebase/Firebase.int";
 
 const Register = () => {
+  const { createUser } = use(AuthContext);
+  //console.log(userInfo);
+
   const handleRegister = (e) => {
     e.preventDefault();
     const name = e.target.name.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
 
-    console.log(name,email,password);
+    console.log(name, email, password);
 
-    //create user 
-    createUserWithEmailAndPassword(auth, email, password)
-    .then(result => {
+    //create user
+    // createUserWithEmailAndPassword(auth, email, password)
+    // .then(result => {
+    //     console.log(result);
+    // })
+    // .catch(error => {
+    //     console.log(error.massage);
+    // })
+
+    createUser(email, password)
+      .then((result) => {
         console.log(result);
-    })
-    .catch(error => {
-        console.log(error.massage);
-    })
+      })
+      .catch((error) => {
+        console.log(error.message); 
+      });
   };
 
   return (
@@ -30,9 +42,19 @@ const Register = () => {
           <label className="label">Name</label>
           <input type="text" className="input" name="name" placeholder="Name" />
           <label className="label">Email</label>
-          <input type="email" className="input" name="email" placeholder="Email" />
+          <input
+            type="email"
+            className="input"
+            name="email"
+            placeholder="Email"
+          />
           <label className="label">Password</label>
-          <input type="password" className="input" name="password" placeholder="Password" />
+          <input
+            type="password"
+            className="input"
+            name="password"
+            placeholder="Password"
+          />
           <div>
             <a className="link link-hover">Forgot password?</a>
           </div>
